@@ -4,6 +4,8 @@ import com.mainproject.server.awsS3.dto.S3UpFileResponse;
 import com.mainproject.server.domain.member.dto.MemberDto;
 import com.mainproject.server.domain.member.entity.Member;
 
+import java.util.List;
+
 public class MemberFactory {
     public static MemberDto.ResponseOnlyMemberName createMemberResponseDto() {
         MemberDto.ResponseOnlyMemberName response = MemberDto.ResponseOnlyMemberName.builder()
@@ -18,6 +20,7 @@ public class MemberFactory {
         Member member = new Member();
         member.setMemberId(1L);
         member.setEmail("test@gmail.com");
+        member.setRoles(List.of("USER"));
         return member;
     }
 }
