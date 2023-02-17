@@ -180,5 +180,38 @@ public class PetControllerTest {
         List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
         assertThat(list.size(), is(2));
     }
+    @Test
+    @DisplayName("강아지 검색")
+    @WithMockUser(username = "test@gmail.com", roles = "USER")
+    void searchPetTest() throws Exception {
+        //given
+        List<Pet> pets = PetFactory.createPetList();
+
+        // 페이지네이션
+        Page<Pet> petPage = new PageImpl<>(pets, PageRequest.of(0, 10, Sort.by("petId").descending()),2);
+        String page = "1";
+        String size = "10";
+        String search = "DOG_S";
+        MultiValueMap<String, String> pages = new LinkedMultiValueMap<>();
+        pages.add("page", page);
+        pages.add("size", size);
+        pages.add("search", search);
+
+        given(petService.findPetByPetSize(Mockito.anyInt(), Mockito.anyInt(), Mockito.any(Pet.PetSize.class))).willReturn(petPage);
+
+        //when
+        ResultActions actions =
+                mockMvc.perform(get(BASE_URL)
+                        .params(pages)
+                        .accept(MediaType.APPLICATION_JSON));
+        //then
+        MvcResult result =
+                actions.andExpect(status().isOk())
+                        .andExpect(jsonPath("$.data").isArray())
+                        .andReturn();
+
+        List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
+        assertThat(list.size(), is(2));
+    }
 
 }
