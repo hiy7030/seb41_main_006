@@ -26,8 +26,11 @@ public class MockToken {
         Date expiration = calendar.getTime();
 
         String Token = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
-        String accessToken = "Bearer " + Token;
-        return accessToken;
+        return bearerToken(Token);
+    }
+
+    public static String bearerToken(String accessToken) {
+        return "Bearer " + accessToken;
     }
 
     public static HttpHeaders getMockToken() {

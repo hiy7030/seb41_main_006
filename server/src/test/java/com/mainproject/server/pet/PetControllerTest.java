@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -212,6 +213,57 @@ public class PetControllerTest {
 
         List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
         assertThat(list.size(), is(2));
+    }
+
+    @Test
+    @DisplayName("내 강아지 가져오기")
+    @WithMockUser(username = "test@gmail.com", roles = "USER")
+    void findMyPetTest() throws Exception {
+        //given
+        List<Pet> pets = PetFactory.createPetList();
+
+        // 페이지네이션
+        Page<Pet> petPage = new PageImpl<>(pets, PageRequest.of(0, 10, Sort.by("petId").descending()),2);
+        String page = "1";
+        String size = "10";
+        MultiValueMap<String, String> pages = new LinkedMultiValueMap<>();
+        pages.add("page", page);
+        pages.add("size", size);
+
+        given(petService.findMyPets(Mockito.anyInt(),Mockito.anyInt(), Mockito.any(MemberDetails.class))).willReturn(petPage);
+        //when
+        ResultActions actions=
+                mockMvc.perform(get(BASE_URL + "/my-pets")
+                        .params(pages)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(csrf())
+                        .headers(MockToken.getMockToken()));
+        //then
+        MvcResult result =
+                actions.andExpect(status().isOk())
+                        .andExpect(jsonPath("$.data").isArray())
+                        .andReturn();
+
+        List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
+        assertThat(list.size(), is(2));
+    }
+
+    @Test
+    @DisplayName("강아지 삭제하기")
+    @WithMockUser(username = "test@gmail.com", roles = "USER")
+    void deletePetTest() throws Exception {
+        //given
+        Pet pet = PetFactory.createPet();
+
+        doNothing().when(petService).deletePets(Mockito.anyLong(), Mockito.any(MemberDetails.class));
+        //when
+        ResultActions actions =
+                mockMvc.perform(delete(BASE_URL + "/{pet-id}", pet.getPetId())
+                        .with(csrf())
+                        .headers(MockToken.getMockToken())
+                        .accept(MediaType.APPLICATION_JSON));
+        //then
+        actions.andExpect(status().isNoContent());
     }
 
 }
