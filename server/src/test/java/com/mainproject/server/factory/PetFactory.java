@@ -10,15 +10,16 @@ import java.util.List;
 public class PetFactory {
     public static Pet createPet() {
 
-        Pet pet = new Pet();
-        pet.setPetId(1L);
-        pet.setName("마루");
-        pet.setAge("5");
-        pet.setPetSize(Pet.PetSize.DOG_S);
-        pet.setNeutered(true);
-        pet.setGender("F");
-        pet.setAboutDog("귀여움");
-        pet.setBreed("푸들");
+        Pet pet = Pet.builder()
+                .petId(1L)
+                .name("마루")
+                .age("5")
+                .petSize(Pet.PetSize.DOG_S)
+                .neutered(true)
+                .gender("F")
+                .aboutDog("귀여움")
+                .breed("푸들")
+                .build();
 
         Member member = MemberFactory.createMember();
         S3UpFile s3UpFile = S3UpFileFactory.createS3UpFile(member, pet);
@@ -30,38 +31,41 @@ public class PetFactory {
     }
 
     public static List<Pet> createPetList() {
-        Pet pet = new Pet();
-        pet.setPetId(1L);
-        pet.setName("마루");
-        pet.setAge("5");
-        pet.setPetSize(Pet.PetSize.DOG_S);
-        pet.setNeutered(true);
-        pet.setGender("F");
-        pet.setAboutDog("귀여움");
-        pet.setBreed("푸들");
+        Pet pet1 = Pet.builder()
+                .petId(1L)
+                .name("마루")
+                .age("5")
+                .petSize(Pet.PetSize.DOG_S)
+                .neutered(true)
+                .gender("F")
+                .aboutDog("귀여움")
+                .breed("푸들")
+                .build();
 
         Member member = MemberFactory.createMember();
-        S3UpFile s3UpFile = S3UpFileFactory.createS3UpFile(member, pet);
+        S3UpFile s3UpFile = S3UpFileFactory.createS3UpFile(member, pet1);
 
-        pet.setMember(member);
-        pet.setS3UpFile(s3UpFile);
+        pet1.setMember(member);
+        pet1.setS3UpFile(s3UpFile);
 
-        Pet pet2 = new Pet();
-        pet2.setPetId(2L);
-        pet2.setName("보리");
-        pet2.setAge("5");
-        pet2.setPetSize(Pet.PetSize.DOG_S);
-        pet2.setNeutered(true);
-        pet2.setGender("F");
-        pet2.setAboutDog("앙칼짐");
-        pet2.setBreed("비숑");
+
+        Pet pet2 = Pet.builder()
+                .petId(1L)
+                .name("보리")
+                .age("5")
+                .petSize(Pet.PetSize.DOG_S)
+                .neutered(true)
+                .gender("F")
+                .aboutDog("앙칼짐")
+                .breed("비숑")
+                .build();
 
         S3UpFile s3UpFile2 = S3UpFileFactory.createS3UpFile(member, pet2);
 
-        pet.setMember(member);
-        pet.setS3UpFile(s3UpFile2);
+        pet2.setMember(member);
+        pet2.setS3UpFile(s3UpFile2);
 
-        return List.of(pet, pet2);
+        return List.of(pet1, pet2);
     }
 
     public static PetDto.Post createPetPostDto() {
