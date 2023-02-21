@@ -28,10 +28,9 @@ public class BatchConfig {
 
     private final BoardRepository boardRepository;
 
-    private final BoardService boardService;
 
     @Bean
-    public Job boardJob() {
+    public Job boardJob() { // 빌더로 초기화하는 과정
         Job job = jobBuilderFactory.get("boardJob")
                 .start(changeBoardStatus())
                 .on("FAILED")
@@ -44,11 +43,10 @@ public class BatchConfig {
         return job;
     }
 
-
     @Bean
     public Step changeBoardStatus() {
         return stepBuilderFactory.get("changeBoardStatus")
-                .tasklet(new BoardTasklet(boardRepository, boardService))
+                .tasklet(new BoardTasklet(boardRepository))
                 .build();
     }
 

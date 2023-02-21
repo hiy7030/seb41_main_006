@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 public class BoardScheduler {
     private final JobLauncher jobLauncher;
     private final Job job;
-    private final BatchConfig batchConfig;
 
     @Scheduled(cron = "0 0/30 * * * *")  // 30분마다 도는 스케줄러
     public void runJob() {
