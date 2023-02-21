@@ -20,14 +20,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardTasklet implements Tasklet {
     private final BoardRepository boardRepository;
-    private final BoardService boardService;
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
         log.info("=====Start Change Board Status======");
         List<Board> findBoards
                 = boardRepository.findByAppointTimeLessThanEqual(LocalDateTime.now());
 
-        if(findBoards.isEmpty() || findBoards == null || findBoards.size() == 0) {
+        if(findBoards == null || findBoards.isEmpty()) {
             log.info("=====변경할 게시글이 없습니다.=====");
         } else {
             for(Board board : findBoards) {
