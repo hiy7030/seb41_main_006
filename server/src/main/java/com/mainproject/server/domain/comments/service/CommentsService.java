@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.mainproject.server.domain.board.service.BoardService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CommentsService {
+	private final BoardService boardService;
 	private final CommentsRepository commentsRepository;
 	private final CommentsLikeRepository commentsLikeRepository;
 	private final MemberService memberService;
@@ -76,6 +78,15 @@ public class CommentsService {
 
 		// 수정 뒤 저장
 		return commentsRepository.save(findComments);
+	}
+
+	// 댓글 목록 가져오기
+	public List<Comments> getComments(long boardId) {
+		Board board = boardService.findBoard(boardId);
+
+		List<Comments> comments = commentsRepository.findAllByBoard(board);
+
+		return comments;
 	}
 
 	// ----- 댓글 삭제

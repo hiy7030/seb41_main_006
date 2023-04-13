@@ -1,5 +1,6 @@
 package com.mainproject.server.domain.comments.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -8,14 +9,7 @@ import javax.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.mainproject.server.auth.userdetails.MemberDetails;
 import com.mainproject.server.domain.comments.dto.CommentsDto;
@@ -86,6 +80,16 @@ public class CommentsController {
 		Comments comments = commentsService.updateComments(mapper.commentsPatchDtoToComments(commentsPatchDto));
 
 		CommentsDto.Response response = mapper.commentsToCommentsResponseDto(comments);
+
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	// 댓글 목록 가져오기
+	// 해당 board에 해당하는 댓글 가져오기
+	@GetMapping
+	public ResponseEntity getComments(@Positive @RequestParam long boardId) {
+		List<Comments> commentsList = commentsService.getComments(boardId);
+		List<CommentsDto.Response> response = mapper.commentsToCommentsResponseDtos(commentsList);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

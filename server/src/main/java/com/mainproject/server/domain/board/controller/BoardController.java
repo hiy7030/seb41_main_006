@@ -88,13 +88,13 @@ public class BoardController {
         return new ResponseEntity<>(new MultiResponseDto<>(responses, pageInfo), HttpStatus.OK);
     }
 
-    @GetMapping("/{board-id}")
-    public ResponseEntity getBoard(@Positive @PathVariable("board-id") long boardId) {
-
-        BoardDto.Response response = boardService.getBoardWithSortedCommentsAndReplies(boardId);
-
-        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
-    }
+//    @GetMapping("/{board-id}")
+//    public ResponseEntity getBoard(@Positive @PathVariable("board-id") long boardId) {
+//
+//        BoardDto.Response response = boardService.getBoardWithSortedCommentsAndReplies(boardId);
+//
+//        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
+//    }
 
     // search 값이 존재하면 검색된 값만 반환, search 값이 없으면 단순 목록 조회
     @GetMapping
