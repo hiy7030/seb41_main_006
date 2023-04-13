@@ -17,4 +17,6 @@ public interface CommentsRepository extends JpaRepository<Comments, Long> {
 	@Query("SELECT c FROM Comments c WHERE c.board = :board ORDER BY c.createdAt ASC, COALESCE(c.parentComments.commentsId, c.commentsId)")
 	List<Comments> findAllByBoardOrderByCreatedAtAscParentCommentsCommentsId(@Param("board") Board board);
 
+	List<Comments> findAllByBoard(Board board);
+
 }

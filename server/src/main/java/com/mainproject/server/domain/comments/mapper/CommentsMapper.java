@@ -1,5 +1,6 @@
 package com.mainproject.server.domain.comments.mapper;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.mapstruct.Mapper;
@@ -51,4 +52,6 @@ public interface CommentsMapper {
 
 		return commentsLikeResponseDto;
 	}
+
+	List<CommentsDto.Response> commentsToCommentsResponseDtos(List<Comments> comments);
 }
