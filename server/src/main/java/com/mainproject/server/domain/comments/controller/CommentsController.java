@@ -88,7 +88,8 @@ public class CommentsController {
 	// 해당 board에 해당하는 댓글 가져오기
 	@GetMapping
 	public ResponseEntity getComments(@Positive @RequestParam long boardId) {
-		List<Comments> commentsList = commentsService.getComments(boardId);
+		List<Comments> commentsList = commentsLikeService.setCommentsLiked(commentsService.getComments(boardId));
+
 		List<CommentsDto.Response> response = mapper.commentsToCommentsResponseDtos(commentsList);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);

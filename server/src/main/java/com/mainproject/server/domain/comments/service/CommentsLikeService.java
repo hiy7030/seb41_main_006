@@ -1,5 +1,6 @@
 package com.mainproject.server.domain.comments.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -50,5 +51,18 @@ public class CommentsLikeService {
 			commentsLike.setComments(findComments);
 			return commentsLikeRepository.save(commentsLike);
 		}));
+	}
+
+	public List<Comments> setCommentsLiked(List<Comments> comments) {
+		for(Comments c : comments) {
+			List<Long> likedMembers = findLikedMembers(c.getCommentsId());
+			c.setlikedMembers(likedMembers);
+		}
+		return comments;
+	}
+
+	public List<Long> findLikedMembers(long commentId) {
+		List<Long> likedMembers = commentsLikeRepository.findMemberIdsByCommentsIdAndLikeStatus(commentId, LikeStatus.LIKE);
+		return likedMembers;
 	}
 }

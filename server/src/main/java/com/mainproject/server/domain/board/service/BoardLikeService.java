@@ -1,5 +1,6 @@
 package com.mainproject.server.domain.board.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -51,5 +52,10 @@ public class BoardLikeService {
 			boardLike.setBoard(findBoard);
 			return boardLikeRepository.save(boardLike);
 		}));
+	}
+
+	public List<Long> findLikedMembers(long boardId) {
+		List<Long> likedMembers = boardLikeRepository.findMemberIdsByBoardIdAndLikeStatus(boardId, LikeStatus.LIKE);
+		return likedMembers;
 	}
 }
