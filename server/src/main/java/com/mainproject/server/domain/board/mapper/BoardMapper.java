@@ -146,7 +146,6 @@ public interface BoardMapper {
     CommentsDto.Response commentsToCommentsResponseDto(Comments comments);
     // ------------------------
 
-    BoardLike boardLikeDtoToBoardLike(BoardLikeDto boardLikeDto);
 
     BoardDto.NoneMemberResponse boardToNoneMemberResponseDto(Board board);
 

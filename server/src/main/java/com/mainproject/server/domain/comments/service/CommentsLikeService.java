@@ -20,14 +20,12 @@ public class CommentsLikeService {
 
 	private final MemberService memberService;
 	private final CommentsService commentsService;
-	private final CommentsRepository commentsRepository;
 	private final CommentsLikeRepository commentsLikeRepository;
 
 	public CommentsLikeService(MemberService memberService, CommentsService commentsService,
-		CommentsRepository commentsRepository, CommentsLikeRepository commentsLikeRepository) {
+		 CommentsLikeRepository commentsLikeRepository) {
 		this.memberService = memberService;
 		this.commentsService = commentsService;
-		this.commentsRepository = commentsRepository;
 		this.commentsLikeRepository = commentsLikeRepository;
 	}
 

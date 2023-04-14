@@ -36,7 +36,6 @@ public interface CommentsMapper {
 	@Mapping(source = "s3UpFile.upFileUrl", target = "profileImage.upFileUrl")
 	MemberDto.ResponseOnlyMemberName memberToMemberNameDto(Member member);
 
-	CommentsLike commentsLikeDtoToCommentsLike(CommentsLikeDto commentsLikeDto);
 
 	default CommentsLikeDto.Response commentsLikeToCommentsLikeResponseDto(Optional<CommentsLike> commentsLike){
 		Member member = commentsLike.get().getMember();

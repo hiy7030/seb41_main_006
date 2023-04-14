@@ -20,17 +20,13 @@ public class BoardLikeService {
 
 	private final MemberService memberService;
 	private final BoardService boardService;
-	private final BoardRepository boardRepository;
 	private final BoardLikeRepository boardLikeRepository;
-	private final BoardMapper boardMapper;
 
-	public BoardLikeService(MemberService memberService, BoardService boardService, BoardRepository boardRepository,
-		BoardLikeRepository boardLikeRepository, BoardMapper boardMapper) {
+
+	public BoardLikeService(MemberService memberService, BoardService boardService, BoardLikeRepository boardLikeRepository) {
 		this.memberService = memberService;
 		this.boardService = boardService;
-		this.boardRepository = boardRepository;
 		this.boardLikeRepository = boardLikeRepository;
-		this.boardMapper = boardMapper;
 	}
 
 	@Transactional
