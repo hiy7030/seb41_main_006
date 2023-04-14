@@ -27,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 public class CommentsService {
 	private final BoardService boardService;
 	private final CommentsRepository commentsRepository;
-	private final CommentsLikeRepository commentsLikeRepository;
 	private final MemberService memberService;
 	private final EntityManager entityManager;
 
@@ -156,10 +155,6 @@ public class CommentsService {
 		return result;
 	}
 
-	// ----- 댓글 좋아요한 멤버 가져오기
-	public List<Long> findCommentsLikedMembers(Long commentsId, LikeStatus likeStatus){
-		return commentsLikeRepository.findMemberIdsByCommentsIdAndLikeStatus(commentsId, likeStatus);
-	}
 
 	// ----- 작성자 검증
 	public void validateCommentsWriter(Comments comments, long memberId){

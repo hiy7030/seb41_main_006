@@ -65,26 +65,6 @@ public class BoardService {
         return findBoard;
     }
 
-
-    // ----- 특정 게시글 조회 (댓글, 대댓글 함께)
-//    @Transactional(readOnly = true)
-//    public BoardDto.Response getBoardWithSortedCommentsAndReplies(Long boardId){
-//        Board findBoard = findVerifiedBoard(boardId);
-//        findBoard.setCommentList(commentsService.getSortedCommentsByBoard(findBoard));
-//
-//        List<Long> likedMembers = boardLikeRepository.findMemberIdsByBoardIdAndLikeStatus(boardId, LikeStatus.LIKE);
-//
-//        for(Comments comments : findBoard.getCommentList()){
-//            List<Long> likedCommentMembers = commentsService.findCommentsLikedMembers(comments.getCommentsId(), LikeStatus.LIKE);
-//            comments.setlikedMembers(likedCommentMembers);
-//        }
-//
-//        BoardDto.Response response = boardMapper.boardToBoardResponseDtoWithLikedMembers(findBoard, likedMembers);
-//        response.setLikedMembers(likedMembers);
-//
-//        return response;
-//    }
-
     @Transactional(readOnly = true)
     public Page<Board> findBoards(int page, int size) {
         Pageable pageable = PageRequest.of(page-1, size, Sort.by("boardId").descending());
