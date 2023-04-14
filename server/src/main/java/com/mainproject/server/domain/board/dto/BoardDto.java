@@ -95,7 +95,6 @@ public class BoardDto {
         private Board.BoardStatus boardStatus;
 
         private MemberDto.SimpleResponse member;
-        private List<CommentsDto.Response> comments;
 
         private List<Long> likedMembers;
 
@@ -117,7 +116,6 @@ public class BoardDto {
         private PetDto.SimpleResponse pet;
         private Board.BoardStatus boardStatus;
 
-        private List<CommentsDto.Response> comments;
 
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

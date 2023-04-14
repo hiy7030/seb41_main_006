@@ -33,12 +33,9 @@ import javax.persistence.EntityManager;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
-    private final BoardMapper boardMapper;
     private final MemberService memberService;
-//    private final CommentsService commentsService;
     private final PetService petService;
     private final CustomBeanUtils customBeanUtils;
-    private final BoardLikeRepository boardLikeRepository;
     private final EntityManager entityManager;
 
 
@@ -67,6 +64,7 @@ public class BoardService {
         Board findBoard = findVerifiedBoard(boardId);
         return findBoard;
     }
+
 
     // ----- 특정 게시글 조회 (댓글, 대댓글 함께)
 //    @Transactional(readOnly = true)

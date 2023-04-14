@@ -77,7 +77,6 @@ public interface BoardMapper {
 
     @Mapping(source = "member.memberId", target = "memberId")
     default BoardDto.Response boardToBoardResponseDto(Board board){
-        List<Comments> comments= board.getCommentList();
         Pet pet = board.getPet();
 
         BoardDto.Response boardResponseDto = BoardDto.Response
@@ -95,7 +94,6 @@ public interface BoardMapper {
                 .boardStatus(board.getBoardStatus())
                 .createdAt(board.getCreatedAt())
                 .modifiedAt(board.getModifiedAt())
-                .comments(commentsToCommentsResponseDtos(comments))
                 .build();
 
         return boardResponseDto;
@@ -103,7 +101,6 @@ public interface BoardMapper {
 
     @Mapping(source = "member.memberId", target = "memberId")
     default BoardDto.Response boardToBoardResponseDtoWithLikedMembers(Board board, List<Long> likedMembers){
-        List<Comments> comments= board.getCommentList();
         Pet pet = board.getPet();
 
         BoardDto.Response boardResponseDto = BoardDto.Response
@@ -121,7 +118,6 @@ public interface BoardMapper {
             .boardStatus(board.getBoardStatus())
             .createdAt(board.getCreatedAt())
             .modifiedAt(board.getModifiedAt())
-            .comments(commentsToCommentsResponseDtos(comments))
             .likedMembers(likedMembers)
             .build();
 
@@ -130,8 +126,6 @@ public interface BoardMapper {
 
     List<BoardDto.Response> boardsToPostResponseDtos(List<Board> boards);
 
-    // ----- Comments
-    List<CommentsDto.Response> commentsToCommentsResponseDtos(List<Comments> comments);
 
     @Mapping(source = "s3UpFile.upFileId", target = "profileImage.upFileId")
     @Mapping(source = "s3UpFile.upFileName", target = "profileImage.upFileName")
