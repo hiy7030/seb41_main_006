@@ -50,10 +50,7 @@ public class MessageController {
         // 채팅방에 메세지 전송
         redisTemplate.convertAndSend(topic.getTopic(), publishMessage);
 
-        // 레디스 캐시에 메세지 저장
-        chatService.saveMessageCache(publishMessage);
-
-//        chatService.saveMessage(messageDto, roomId);
+        chatService.saveMessage(messageDto, roomId);
     }
 
     // 채팅메세지 가져오기

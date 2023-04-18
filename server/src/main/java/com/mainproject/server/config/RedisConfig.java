@@ -3,6 +3,7 @@ package com.mainproject.server.config;
 import com.mainproject.server.domain.chat.redis.RedisSubscriber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.Cache;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -77,10 +78,16 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory,
-                                          RedisCacheConfiguration cacheConfiguration) {
-        return RedisCacheManager.builder(connectionFactory)
+    public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+        RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(10)); // 캐시 만료 시간 10분
+        return RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(cacheConfiguration)
                 .build();
+    }
+
+    @Bean
+    public Cache messageCache(RedisCacheManager redisCacheManager) {
+        return redisCacheManager.getCache("messageCache");
     }
 }
