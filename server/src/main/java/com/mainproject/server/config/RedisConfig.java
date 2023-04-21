@@ -52,7 +52,7 @@ public class RedisConfig {
         RedisTemplate<String, Object> chatRedisTemplate = new RedisTemplate<>();
         chatRedisTemplate.setConnectionFactory(connectionFactory);
         chatRedisTemplate.setKeySerializer(new StringRedisSerializer());
-        chatRedisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
+        chatRedisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
         return chatRedisTemplate;
     }
 
@@ -77,17 +77,4 @@ public class RedisConfig {
         return new MessageListenerAdapter(redisSubscriber, "sendMessage");
     }
 
-    @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
-        RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofMinutes(10)); // 캐시 만료 시간 10분
-        return RedisCacheManager.builder(redisConnectionFactory)
-                .cacheDefaults(cacheConfiguration)
-                .build();
-    }
-
-    @Bean
-    public Cache messageCache(RedisCacheManager redisCacheManager) {
-        return redisCacheManager.getCache("messageCache");
-    }
 }
