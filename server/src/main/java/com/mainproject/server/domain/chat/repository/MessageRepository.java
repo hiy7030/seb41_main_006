@@ -9,6 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface MessageRepository extends JpaRepository<ChatMessage, Long> {
-    Page<ChatMessage> findByChatRoom(Pageable pageable, ChatRoom chatRoom);
-    List<ChatMessage> findAllByChatRoom(ChatRoom chatRoom);
+    Page<ChatMessage> findAllByChatRoomOrderBySendTimeDesc(ChatRoom chatRoom, Pageable pageable);
 }
