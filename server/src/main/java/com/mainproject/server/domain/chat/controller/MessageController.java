@@ -12,9 +12,7 @@ import com.mainproject.server.exception.ExceptionCode;
 import com.mainproject.server.response.PageInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.Cache;
 import org.springframework.data.domain.Page;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.http.HttpStatus;
@@ -49,8 +47,9 @@ public class MessageController {
 
         // 채팅방에 메세지 전송
         redisTemplate.convertAndSend(topic.getTopic(), publishMessage);
+        log.info("레디스 서버에 메세지 전송 완료");
 
-        chatService.CachedMessage(messageDto, roomId);
+        chatService.saveMessage(messageDto, roomId);
     }
 
     // 채팅메세지 가져오기

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatMessage implements Serializable  {
+public class ChatMessage  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
